@@ -18,7 +18,6 @@ import java.util.List;
 
 public class AddUnitActivity extends AppCompatActivity {
 
-    public static MyDatabase myDatabase;
     private List<UnitItem> unitItemList;
     String[] unitNames;
     String[] unitPictures;
@@ -71,16 +70,20 @@ public class AddUnitActivity extends AppCompatActivity {
         }
 
         if (goodName) {
-            MyDataList myDataList = new MyDataList();
-            myDataList.setCardID(id);
-            myDataList.setName(name);
-            myDataList.setPicture(picture);
-            myDataList.setCopies(0);
-            MainActivity.myDatabase.getItemInterface().insert(myDataList);
-            Toast.makeText(getApplicationContext(), "Unit was Added", Toast.LENGTH_LONG).show();
-            searchForUnit.setText("");
-            finish();
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            if(!MainActivity.myDatabase.getItemInterface().exists(id)){
+                MyDataList myDataList = new MyDataList();
+                myDataList.setCardID(id);
+                myDataList.setName(name);
+                myDataList.setPicture(picture);
+                myDataList.setCopies(0);
+                MainActivity.myDatabase.getItemInterface().insert(myDataList);
+                Toast.makeText(getApplicationContext(), "Unit was Added", Toast.LENGTH_LONG).show();
+                searchForUnit.setText("");
+                finish();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }else{
+                Toast.makeText(getApplicationContext(), "You already added this unit", Toast.LENGTH_LONG).show();
+            }
         }
         else{
             Toast.makeText(getApplicationContext(), "No Unit Has This Name", Toast.LENGTH_LONG).show();
