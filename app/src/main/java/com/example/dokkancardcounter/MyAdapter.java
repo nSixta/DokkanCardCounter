@@ -37,9 +37,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.ViewHolder holder, int position) {
         MyDataList dataList = myDataLists.get(position);
+        String idString = "ID: " + dataList.getCardID();
         AtomicInteger number = new AtomicInteger(dataList.getCopies());
         Picasso.get().load(dataList.getPicture()).into(holder.unitImageView);
         holder.unitNameTextView.setText(dataList.getName());
+        holder.idTextView.setText(idString);
         holder.deleteButton.setOnClickListener(v -> {
             MainActivity.myDatabase.getItemInterface().delete(dataList);
             if (myDataLists.size() != 0) {
@@ -72,6 +74,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        TextView idTextView;
         ImageView unitImageView;
         TextView unitNameTextView;
         ImageButton deleteButton;
@@ -84,6 +87,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            idTextView = itemView.findViewById(R.id.idTextView);
             unitImageView = itemView.findViewById(R.id.unitImageView);
             unitNameTextView = itemView.findViewById(R.id.unitNameTextView);
             deleteButton = itemView.findViewById(R.id.deleteButton);

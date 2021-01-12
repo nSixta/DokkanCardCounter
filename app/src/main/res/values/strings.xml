@@ -1,5 +1,21 @@
 <resources>
     <string name="app_name">DokkanCardCounter</string>
+
+    <string-array name="cardID">
+        <item>1020350</item>
+        <item>1012880</item>
+        <item>1017880</item>
+        <item>1020440</item>
+        <item>1018630</item>
+        <item>1018600</item>
+        <item>1017610</item>
+        <item>1015740</item>
+        <item>1015760</item>
+        <item>1016790</item>
+        <item>1012910</item>
+        <item>1019970</item>
+    </string-array>
+
     <string-array name="units">
         <item>Majin Buu (Gotenks)</item>
         <item>Goku and Vegeta</item>

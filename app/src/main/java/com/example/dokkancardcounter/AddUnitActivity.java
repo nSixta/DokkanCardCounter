@@ -22,6 +22,7 @@ public class AddUnitActivity extends AppCompatActivity {
     private List<UnitItem> unitItemList;
     String[] unitNames;
     String[] unitPictures;
+    String[] unitID;
 //    private static final String[] unitNames = {"Majin Buu (Gotenks)",
 //            "Goku & Vegeta",
 //            "Cell (Perfect Form)",
@@ -57,6 +58,7 @@ public class AddUnitActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_unit);
+        unitID = getResources().getStringArray(R.array.cardID);
         unitNames = getResources().getStringArray(R.array.units);
         unitPictures = getResources().getStringArray(R.array.pictures);
 
@@ -72,11 +74,12 @@ public class AddUnitActivity extends AppCompatActivity {
     public void fillUnitList() {
         unitItemList = new ArrayList<>();
         for (int i = 0; i < unitNames.length; i++) {
-            unitItemList.add(new UnitItem(unitNames[i], unitPictures[i]));
+            unitItemList.add(new UnitItem(unitID[i], unitNames[i], unitPictures[i]));
         }
     }
 
     public void insertUnit() {
+        String id = "";
         String name = searchForUnit.getText().toString();
         String picture = "";
         boolean goodName = false;
@@ -86,6 +89,7 @@ public class AddUnitActivity extends AppCompatActivity {
         } else {
             for (int i = 0; i < unitNames.length; i++) {
                 if (name.equals(unitNames[i])) {
+                    id = unitID[i];
                     picture = unitPictures[i];
                     goodName = true;
                 }
@@ -94,6 +98,7 @@ public class AddUnitActivity extends AppCompatActivity {
 
         if (goodName) {
             MyDataList myDataList = new MyDataList();
+            myDataList.setCardID(id);
             myDataList.setName(name);
             myDataList.setPicture(picture);
             myDataList.setCopies(0);

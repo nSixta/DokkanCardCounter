@@ -10,6 +10,9 @@ public class MyDataList {
     @PrimaryKey(autoGenerate = true)
     private int id = 0;
 
+    @ColumnInfo(name = "CardID")
+    private String cardID;
+
     @ColumnInfo(name = "Name")
     private String name;
 
@@ -25,6 +28,14 @@ public class MyDataList {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCardID() {
+        return cardID;
+    }
+
+    public void setCardID(String cardID) {
+        this.cardID = cardID;
     }
 
     public String getName() {
