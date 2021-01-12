@@ -32,6 +32,7 @@ public class AutoCompleteUnitAdapter extends ArrayAdapter<UnitItem> {
         return unitFilter;
     }
 
+    //Grab the information from the lists and display them in a each row
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -48,6 +49,7 @@ public class AutoCompleteUnitAdapter extends ArrayAdapter<UnitItem> {
         return convertView;
     }
 
+    //Filter out the list as the user specifies which unit he/she wants to select
     private Filter unitFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
