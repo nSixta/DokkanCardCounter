@@ -19,8 +19,8 @@ public interface ItemInterface {
     @Query("UPDATE items SET copies = :copies WHERE ID = :id")
     void update(int id, int copies);
 
-    @Query("SELECT EXISTS (SELECT 1 FROM items WHERE id = :id)")
-    boolean exists(int id);
+    @Query("SELECT EXISTS (SELECT 1 FROM items WHERE cardID = :cardID)")
+    boolean exists(String cardID);
 
     @Query("SELECT * FROM items")
     List<MyDataList> getItems();
