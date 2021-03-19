@@ -18,7 +18,6 @@ import java.util.List;
 
 public class AddUnitActivity extends AppCompatActivity {
 
-    public static MyDatabase myDatabase;
     private List<UnitItem> unitItemList;
     String[] unitNames;
     String[] unitPictures;
@@ -32,19 +31,25 @@ public class AddUnitActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_unit);
+
+        //Create String arrays from strings.xml
         unitID = getResources().getStringArray(R.array.cardID);
         unitNames = getResources().getStringArray(R.array.units);
         unitPictures = getResources().getStringArray(R.array.pictures);
 
         fillUnitList();
 
+        //Link autoCompleteTextView and set adapter for the autoCompleteTextView
         searchForUnit = findViewById(R.id.searchForUnitText);
         autoCompleteUnitAdapter = new AutoCompleteUnitAdapter(this, unitItemList);
         searchForUnit.setAdapter(autoCompleteUnitAdapter);
+
+
         addButton = findViewById(R.id.addNewUnitButton);
         addButton.setOnClickListener(v -> insertUnit());
     }
 
+    //Fill the list of for the autoCompleteTextView to show when searching for a unit
     public void fillUnitList() {
         unitItemList = new ArrayList<>();
         for (int i = 0; i < unitNames.length; i++) {
@@ -52,6 +57,7 @@ public class AddUnitActivity extends AppCompatActivity {
         }
     }
 
+    //Check the conditions for the unit searched and add the unit to a Room Database
     public void insertUnit() {
         String id = "";
         String name = searchForUnit.getText().toString();
@@ -70,17 +76,22 @@ public class AddUnitActivity extends AppCompatActivity {
             }
         }
 
+        //The name entered was a valid name
         if (goodName) {
-            MyDataList myDataList = new MyDataList();
-            myDataList.setCardID(id);
-            myDataList.setName(name);
-            myDataList.setPicture(picture);
-            myDataList.setCopies(0);
-            MainActivity.myDatabase.getItemInterface().insert(myDataList);
-            Toast.makeText(getApplicationContext(), "Unit was Added", Toast.LENGTH_LONG).show();
-            searchForUnit.setText("");
-            finish();
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            if(!MainActivity.myDatabase.getItemInterface().exists(id)){
+                MyDataList myDataList = new MyDataList();
+                myDataList.setCardID(id);
+                myDataList.setName(name);
+                myDataList.setPicture(picture);
+                myDataList.setCopies(0);
+                MainActivity.myDatabase.getItemInterface().insert(myDataList);
+                Toast.makeText(getApplicationContext(), "Unit was Added", Toast.LENGTH_LONG).show();
+                searchForUnit.setText("");
+                finish();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }else{
+                Toast.makeText(getApplicationContext(), "You already added this unit", Toast.LENGTH_LONG).show();
+            }
         }
         else{
             Toast.makeText(getApplicationContext(), "No Unit Has This Name", Toast.LENGTH_LONG).show();

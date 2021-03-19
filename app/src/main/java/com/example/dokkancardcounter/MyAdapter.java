@@ -42,6 +42,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         Picasso.get().load(dataList.getPicture()).into(holder.unitImageView);
         holder.unitNameTextView.setText(dataList.getName());
         holder.idTextView.setText(idString);
+
+        //Delete a row when delete button is clicked
         holder.deleteButton.setOnClickListener(v -> {
             MainActivity.myDatabase.getItemInterface().delete(dataList);
             if (myDataLists.size() != 0) {
@@ -51,11 +53,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             notifyItemRemoved(position);
         });
         holder.numberOfCopiesText.setText(String.valueOf(dataList.getCopies()));
+
+        //Increase number of copies pulled by 1
         holder.addButton.setOnClickListener(v -> {
             number.getAndIncrement();
             MainActivity.myDatabase.getItemInterface().update(dataList.getId(), number.get());
             holder.numberOfCopiesText.setText(String.valueOf(number.get()));
         });
+
+        //Decrease number of copies pulled by 1 and cap to 0
         holder.subtractButton.setOnClickListener(v -> {
             number.getAndDecrement();
             MainActivity.myDatabase.getItemInterface().update(dataList.getId(), number.get());
